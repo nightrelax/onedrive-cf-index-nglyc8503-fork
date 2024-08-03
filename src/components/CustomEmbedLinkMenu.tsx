@@ -99,7 +99,10 @@ export default function CustomEmbedLinkMenu({
                   value={name}
                   onChange={e => setName(e.target.value)}
                 />
-
+                <LinkContainer
+                  title={'Web1S'}
+                  value={`${getBaseUrl()}/api/raw?path=${readablePath}${hashedToken ? `&odpt=${hashedToken}` : ''}`}
+                />
                 <LinkContainer
                   title={'Default'}
                   value={`${getBaseUrl()}/api/raw?path=${readablePath}${hashedToken ? `&odpt=${hashedToken}` : ''}`}
