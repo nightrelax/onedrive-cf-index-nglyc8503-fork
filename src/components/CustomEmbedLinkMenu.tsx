@@ -105,6 +105,10 @@ export default function CustomEmbedLinkMenu({
                   value={`${getBaseUrl()}/api/raw?path=${readablePath}${hashedToken ? `&odpt=${hashedToken}` : ''}`}
                 />
                 <LinkContainer
+                  title={'Web1S'}
+                  value={`${getBaseUrl()}/api/raw?path=${readablePath}${hashedToken ? `&odpt=${hashedToken}` : ''}`}
+                />
+                <LinkContainer
                   title={'URL encoded'}
                   value={`${getBaseUrl()}/api/raw?path=${path}${hashedToken ? `&odpt=${hashedToken}` : ''}`}
                 />
