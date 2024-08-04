@@ -117,10 +117,6 @@ export default function CustomEmbedLinkMenu({
                   title={'Customised and encoded'}
                   value={`${getBaseUrl()}/api/name/${name}?path=${path}${hashedToken ? `&odpt=${hashedToken}` : ''}`}
                 />
-                <LinkContainer
-                  title={'Web1S'}
-                  value={`${getBaseUrl()}/api/raw?path=${readablePath}${hashedToken ? `&odpt=${hashedToken}` : ''}`}
-                />
               </div>
             </div>
           </Transition.Child>
