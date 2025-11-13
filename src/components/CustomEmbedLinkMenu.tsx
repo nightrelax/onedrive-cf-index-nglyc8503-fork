@@ -25,28 +25,6 @@ function LinkContainer({ title, value }: { title: string; value: string }) {
   )
 }
 
-export default async function handler(req, res) {
-  const { longUrl } = req.query;
-
-  if (!longUrl) {
-    return res.status(400).json({ message: 'Long URL is required' });
-  }
-
-  const apiToken = '79ba96503692fe81f8ce21e18798953605656d47';
-  const apiUrl = `https://shrinkme.io/api?api=${apiToken}&url=${encodeURIComponent(longUrl)}&format=text`;
-
-  try {
-    const response = await fetch(apiUrl);
-    if (!response.ok) {
-      throw new Error('Failed to shorten URL');
-    }
-    const shortUrl = await response.text();
-    res.status(200).send(shortUrl);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-}
-
 export default function CustomEmbedLinkMenu({
   path,
   menuOpen,
@@ -65,26 +43,6 @@ export default function CustomEmbedLinkMenu({
   const readablePath = getReadablePath(path)
   const filename = readablePath.substring(readablePath.lastIndexOf('/') + 1)
   const [name, setName] = useState(filename)
-  const [shortUrl, setShortUrl] = useState('')
-
- const generateShortUrl = async (url) => {
-    try {
-      const response = await fetch(`/api/shorten-url?longUrl=${encodeURIComponent(url)}`);
-      if (!response.ok) {
-        throw new Error('Failed to fetch the shortened URL');
-      }
-      const shortUrl = await response.text();
-      setShortUrl(shortUrl);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  // Generate short URL when the component mounts or path changes
-  useEffect(() => {
-    const longUrl = `${getBaseUrl()}/api/raw?path=${readablePath}${hashedToken ? `&odpt=${hashedToken}` : ''}`;
-    generateShortUrl(longUrl);
-  }, [path, readablePath, hashedToken]);
 
   return (
     <Transition appear show={menuOpen} as={Fragment}>
@@ -148,7 +106,7 @@ export default function CustomEmbedLinkMenu({
                 />
                 <LinkContainer
                   title={'Web1S'}
-                  value={shortUrl}
+                  value={`${getBaseUrl()}/api/raw?path=${readablePath}${hashedToken ? `&odpt=${hashedToken}` : ''}`}
                 />
                 <LinkContainer
                   title={'URL encoded'}
